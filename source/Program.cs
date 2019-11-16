@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Drawing;
+using System.Globalization;
 
 namespace DeathMap {
     class Program {
@@ -104,7 +105,7 @@ namespace DeathMap {
                     }
 
                     // go through ALL *.ADM files from specified directory
-                    string[] files = Directory.GetFiles( args[0] );
+                    string[] files = Directory.GetFiles( args[0], "*", SearchOption.AllDirectories );
                     foreach ( string fileName in files ) {
                         if ( fileName.Contains(".ADM") ) {
                             using ( StreamReader reader = new StreamReader( File.Open(fileName, FileMode.Open ) ) ) {
@@ -138,7 +139,7 @@ namespace DeathMap {
 
                                         // parse position
                                         string[] positionStringSplit = positionString.Split(',');
-                                        float posParsedX = float.Parse( positionStringSplit[0] ), posParsedY = float.Parse( positionStringSplit[1] );
+                                        float posParsedX = float.Parse( positionStringSplit[0], CultureInfo.InvariantCulture.NumberFormat ), posParsedY = float.Parse( positionStringSplit[1], CultureInfo.InvariantCulture.NumberFormat );
                                         if ( ( ( posParsedX >= 0 ) && ( posParsedX < mapSize ) ) && ( ( posParsedY >= 0 ) && ( posParsedY < mapSize ) ) ) {
                                             positionArray.Add( posParsedX );
                                             positionArray.Add( posParsedY );
